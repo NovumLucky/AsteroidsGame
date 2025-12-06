@@ -1,7 +1,7 @@
-class Asteroid extends Floater
+class asteroid extends Floater
 {
   double rotSpeed;
-  public Asteroid(){
+  public asteroid(){
     corners = 6;
     xCorners = new int[corners];
     yCorners = new int[corners];
