@@ -20,7 +20,7 @@ class Bullet extends Floater {
     noStroke();
     ellipse((float)myCenterX, (float)myCenterY, 8, 8);
   }
-
+//test
   public double getRadius() {
     return 4;
   }
