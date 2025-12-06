@@ -1,4 +1,4 @@
-class asteroid extends Floater
+class Asteroid extends Floater
 {
   double rotSpeed;
   public asteroid(){
