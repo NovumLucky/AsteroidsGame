@@ -1,4 +1,5 @@
 Star[] doob = new Star[200];
+ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 Spaceship goob ;
 ArrayList<asteroid> boog = new ArrayList<asteroid>();
 public void setup() 
@@ -16,6 +17,10 @@ public void setup()
 public void draw() 
 {
  background(0);
+ for (int i = 0; i < bullets.size(); i++) {
+  bullets.get(i).move();
+  bullets.get(i).show();
+}
   for(int i = 0; i < doob.length; i++)
   {
   doob[i].show();
@@ -33,10 +38,35 @@ public void draw()
   }
 
 }
-  //your code here
+  // Check every bullet
+for (int i = 0; i < bullets.size(); i++) {
+  Bullet bullet = bullets.get(i);
+
+  // Check every asteroid
+  for (int j = 0; j < boog.size(); j++) {
+    asteroid rock = boog.get(j);
+    float d = dist(
+      (float)bullet.myCenterX, 
+      (float)bullet.myCenterY,
+      (float)rock.getX(), 
+      (float)rock.getY()
+    );
+    if (d < rock.getRadius()) {
+      boog.remove(j);
+      bullets.remove(i);
+      i--;
+      break;
+    }
+  }
 }
+}
+
+
 void keyPressed()
 {
+    if (key == 'd') {
+    bullets.add(new Bullet(goob));
+  }
   if (key == 'w')
   goob.accelerate();
   if (key == 'q')
