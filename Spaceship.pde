@@ -1,85 +1,54 @@
-Star[] doob = new Star[200];
-ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-Spaceship goob ;
-ArrayList<asteroid> boog = new ArrayList<asteroid>();
-public void setup() 
-{
-  size (800,800);
-  goob = new Spaceship();
-  for(int i = 0; i < doob.length ; i ++){
-  doob[i] = new Star();
+class Spaceship extends Floater  
+{   
+  public Spaceship() {
+    corners = 4;
+    xCorners = new int [corners] ;
+    yCorners = new int [corners] ;
+    //shape of my triangular ship
+    //tip
+    xCorners[0] = -8;
+    yCorners[0] = -8;
+    //bottom corner
+    xCorners[1] = -3;
+    yCorners[1] = 0;
+    //right fin
+    xCorners[2] = -8;
+    yCorners[2] = 8;
+    //left fin
+     xCorners[3] = 16;
+    yCorners[3] = 0;
+    
+    myColor = color(250,158,0);
+    myCenterX = width/2;
+    myCenterY = height/2;
+    myXspeed = 0;
+    myYspeed = 0;
+    myPointDirection = Math.random()*360;
   }
-  for (int i = 0; i < 7; i++)
+    public void turnLeft()
+    {
+      turn(-10);
+  }
+  public void turnRight()
   {
-    boog.add(new asteroid());
+      turn(10);
   }
-}
-public void draw() 
-{
- background(0);
- for (int i = 0; i < bullets.size(); i++) {
-  bullets.get(i).move();
-  bullets.get(i).show();
-}
-  for(int i = 0; i < doob.length; i++)
+  public void accelerate()
   {
-  doob[i].show();
+    super.accelerate(0.1);
   }
-  goob.show();
-  goob.move();
-  for (int i = 0; i < boog.size(); i++) {
-  asteroid poob = boog.get(i);
-  poob.move();
-  poob.show();
+  public void hyperspace()
+  {
+    myCenterX = Math.random()*width;
+    myCenterY = Math.random()*width;
+    myXspeed = 0;
+    myYspeed = 0;
+    myPointDirection = Math.random()*360;
   }
-  for (int i = boog.size() - 1; i >= 0; i--) {
-  if (collides(goob, boog.get(i))) {
-    boog.remove(i);
+  public double getX() { return myCenterX; }
+public double getY() { return myCenterY; }
+public double getRadius() { return 25; }
+public double getXspeed() { return myXspeed; }
+public double getYspeed() { return myYspeed; }
+public double getDirection() { return myPointDirection; }
   }
-
-}
-  // Check every bullet
-for (int i = 0; i < bullets.size(); i++) {
-  Bullet bullet = bullets.get(i);
-
-  // Check every asteroid
-  for (int j = 0; j < boog.size(); j++) {
-    asteroid rock = boog.get(j);
-    float d = dist(
-      (float)bullet.myCenterX, 
-      (float)bullet.myCenterY,
-      (float)rock.getX(), 
-      (float)rock.getY()
-    );
-    if (d < rock.getRadius()) {
-      boog.remove(j);
-      bullets.remove(i);
-      i--;
-      break;
-    }
-  }
-}
-}
-
-
-void keyPressed()
-{
-    if (key == ' ') {   // space bar shoots
-    bullets.add(new Bullet(goob));
-  }
-  if (key == 'w')
-  goob.accelerate();
-  if (key == 'q')
-  goob.turnLeft();
-  if (key == 'e')
-  goob.turnRight();
-  if (key == 'h')
-  goob.hyperspace();
-}
-boolean collides(Spaceship s, asteroid a) {
-  float d = dist(
-    (float)s.getX(), (float)s.getY(),
-    (float)a.getX(), (float)a.getY()
-  );
-  return d < s.getRadius() + a.getRadius();
-}
